@@ -114,15 +114,15 @@ public class Tree {
 	}
 
 	// Complejidad O(n) - Tiene que recorrer todo el árbol
-		private void printInOrder(TreeNode actual) { // Izq, Raíz, Der
-			if (actual == null)
-				System.out.println(" - ");
-			else {
-				printPreOrder(actual.getLeft());
-				System.out.print(actual.getValue() + " ");
-				printPreOrder(actual.getRight());
-			}
+	private void printInOrder(TreeNode actual) { // Izq, Raíz, Der
+		if (actual == null)
+			System.out.println(" - ");
+		else {
+			printPreOrder(actual.getLeft());
+			System.out.print(actual.getValue() + " ");
+			printPreOrder(actual.getRight());
 		}
+	}
 
 	public List<Integer> getLongestBranch() {
 		return getLongestBranch(root);
@@ -205,47 +205,56 @@ public class Tree {
 		}
 	}
 
-	public Integer getNodoMenorIzquierdo(TreeNode actual) {
-		if (actual.getLeft() == null)
-			return actual.getValue();
-		else
-			return getNodoMenorIzquierdo(actual.getLeft());
+	public TreeNode getNodoMenorIzquierdo(TreeNode actual) {
+	    // Recorre el subárbol hacia la izquierda hasta encontrar el nodo más pequeño
+	    if (actual.getLeft() != null) {
+	        actual = actual.getLeft();
+	    }
+	    return actual;
 	}
 
 	public boolean delete(Integer value) {
-		return delete(value, root);
+	    if (value != null) {
+	        root = delete(root, value);
+	        // Se actualiza el nodo raíz en caso de que se elimine
+	        // Retorna true para indicar que se eliminó el valor
+	        return true;
+	    }
+	    // Si el valor es nulo, retorna false porque no se puede eliminar
+	    return false;
 	}
 
-	private boolean delete(Integer value, TreeNode actual) {
-		if (actual == null)
-			return false;
-
-		if (actual.esHoja()) {
-			actual = null;
-			return true;
-		}
-		// Si el valor a eliminar es menor que el valor del nodo actual, recorro a la
-		// izquierda
-		if (actual.getValue() > value) {
-			delete(value, actual.getLeft());
-		}
-		// Si el valor a eliminar es mayor que el valor del nodo actual, recorro a la
-		// derecha
-		else if (actual.getValue() < value)
-			delete(value, actual.getRight());
-		else {
-			// Si el nodo tiene un solo hijo a la derecha
-			if (actual.getRight() != null && actual.getLeft() == null) {
-
-			}
-			// Si el nodo tiene un solo hijo a la izquierda
-			else if (actual.getRight() == null && actual.getLeft() != null) {
-
-			}
-			// Si tiene dos hijos
-			else {
-
-			}
-		}
+	private TreeNode delete(TreeNode actual, Integer value) {
+		// Comprueba si el valor a eliminar es menor que el valor del nodo actual
+	    if (value < actual.getValue()) {
+	        // Si es menor, se llama recursivamente al método delete con el nodo izquierdo
+	    	actual.setLeft(delete(actual.getLeft(), value));
+	    } else if (value > actual.getValue()) {
+	        // Si es mayor, se llama recursivamente al método delete con el nodo derecho
+	    	actual.setRight(delete(actual.getRight(), value));
+	    } else {
+	        // Si el valor es igual al valor del nodo actual, se procede a eliminarlo
+	        // Caso 1: El nodo no tiene hijo izquierdo
+	        if (actual.getLeft() == null) {
+	            // Retorna el hijo derecho del nodo actual (puede ser nulo o no)
+	            return actual.getRight();
+	        }
+	        // Caso 2: El nodo no tiene hijo derecho
+	        else if (actual.getRight() == null) {
+	            // Retorna el hijo izquierdo del nodo actual
+	            return actual.getLeft();
+	        }
+	        // Caso 3: El nodo tiene dos hijos
+	        else {
+	            // Encuentra el nodo con el valor mínimo en el subárbol derecho
+	            TreeNode nodoMenor = getNodoMenorIzquierdo(actual.getRight());
+	            // Copia el valor mínimo al nodo actual
+	            actual.setValue(nodoMenor.getValue());
+	            // Elimina el nodo con el valor mínimo del subárbol derecho
+	            actual.setRight(delete(actual.getRight(), nodoMenor.getValue()));
+	        }
+	    }
+	    // Retorna el nodo actual modificado
+	    return actual;
 	}
 }
