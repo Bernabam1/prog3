@@ -36,6 +36,7 @@ public class Tree {
 		}
 	}
 
+	// Complejidad O(1) - Devuelve el valor de la raíz del árbol
 	public Integer getRoot() {
 		if (this.root != null) {
 			return this.root.getValue();
@@ -48,6 +49,7 @@ public class Tree {
 		return hasElem(root, value);
 	}
 
+	// Complejidad es O(h) - h es la altura del árbol
 	private boolean hasElem(TreeNode node, Integer value) {
 		if (node == null) {
 			return false;
@@ -67,18 +69,66 @@ public class Tree {
 		}
 	}
 
+	// Complejidad O(1) - Solo verifica si la raíz es nula
 	public boolean isEmpty() {
 		return this.root == null;
 	}
 
+	// Complejidad O(n) - En el peor caso tiene que recorrer todo el árbol
 	public void insert(Integer value) {
 		add(root, value);
 	}
+
+	public void printPosOrder() {
+		printPosOrder(root);
+	}
+
+	// Complejidad O(n) - Tiene que recorrer todo el árbol
+	private void printPosOrder(TreeNode actual) { // Izq, Der, Raíz
+		if (actual == null)
+			System.out.println(" - ");
+		else {
+			printPosOrder(actual.getLeft());
+			printPosOrder(actual.getRight());
+			System.out.print(actual.getValue() + " ");
+		}
+	}
+
+	public void printPreOrder() {
+		printPreOrder(root);
+	}
+
+	// Complejidad O(n) - Tiene que recorrer todo el árbol
+	private void printPreOrder(TreeNode actual) { // Raíz, Izq, Der
+		if (actual == null)
+			System.out.println(" - ");
+		else {
+			System.out.print(actual.getValue() + " ");
+			printPreOrder(actual.getLeft());
+			printPreOrder(actual.getRight());
+		}
+	}
+
+	public void printInOrder() {
+		printInOrder(root);
+	}
+
+	// Complejidad O(n) - Tiene que recorrer todo el árbol
+		private void printInOrder(TreeNode actual) { // Izq, Raíz, Der
+			if (actual == null)
+				System.out.println(" - ");
+			else {
+				printPreOrder(actual.getLeft());
+				System.out.print(actual.getValue() + " ");
+				printPreOrder(actual.getRight());
+			}
+		}
 
 	public List<Integer> getLongestBranch() {
 		return getLongestBranch(root);
 	}
 
+	// Complejidad es O(n) - Recorre todos los nodos del árbol
 	private List<Integer> getLongestBranch(TreeNode actual) {
 		// Si la rama es null devuelvo lista vacía
 		if (actual == null) {
@@ -112,6 +162,7 @@ public class Tree {
 		return resultado;
 	}
 
+	// Complejidad es O(n) - Recorre todos los nodos del árbol
 	private void getFrontera(List<Integer> resultado, TreeNode actual) {
 		if (actual != null) {
 			if (actual.esHoja())
@@ -154,6 +205,13 @@ public class Tree {
 		}
 	}
 
+	public Integer getNodoMenorIzquierdo(TreeNode actual) {
+		if (actual.getLeft() == null)
+			return actual.getValue();
+		else
+			return getNodoMenorIzquierdo(actual.getLeft());
+	}
+
 	public boolean delete(Integer value) {
 		return delete(value, root);
 	}
@@ -161,8 +219,8 @@ public class Tree {
 	private boolean delete(Integer value, TreeNode actual) {
 		if (actual == null)
 			return false;
-		
-		if(actual.esHoja()) {
+
+		if (actual.esHoja()) {
 			actual = null;
 			return true;
 		}
@@ -177,16 +235,16 @@ public class Tree {
 			delete(value, actual.getRight());
 		else {
 			// Si el nodo tiene un solo hijo a la derecha
-			if(actual.getRight() != null && actual.getLeft() == null) {
-				
+			if (actual.getRight() != null && actual.getLeft() == null) {
+
 			}
 			// Si el nodo tiene un solo hijo a la izquierda
-			else if(actual.getRight() == null && actual.getLeft() != null) {
-				
+			else if (actual.getRight() == null && actual.getLeft() != null) {
+
 			}
 			// Si tiene dos hijos
 			else {
-				
+
 			}
 		}
 	}
