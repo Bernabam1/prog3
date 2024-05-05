@@ -113,5 +113,4 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		return arcos != null ? arcos.iterator() : null;
 	}
 
-	asdfhasdfjhdsfh
 }
