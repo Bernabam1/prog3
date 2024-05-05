@@ -1,4 +1,4 @@
-package practico3.arboles;
+package practico2.arboles;
 
 public class MainArboles {
 
