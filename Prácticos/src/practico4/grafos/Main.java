@@ -13,11 +13,13 @@ public class Main {
 
 		// Genero un arco desde 1 hasta 2 con el valor de etiqueta 3
 		grafito.agregarArco(1, 2, 3F);
+		System.out.println(grafito.cantidadArcos());
+		System.out.println(grafito.cantidadVertices());
 
 		// Obtengo el arco entre 1 y 2, y le pido la etiqueta
-		Float etiqueta = grafito.obtenerArco(1, 2).getEtiqueta();
+		/*Float etiqueta = grafito.obtenerArco(1, 2).getEtiqueta();
 
-		System.out.println(etiqueta); // Debería imprimir 3
+		System.out.println(etiqueta); // Debería imprimir 3*/
 	}
 
 }

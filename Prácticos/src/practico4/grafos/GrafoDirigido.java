@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
-
 public class GrafoDirigido<T> implements Grafo<T> {
 	private HashMap<Integer, List<Arco<T>>> vertices;
 
@@ -15,23 +14,32 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public void agregarVertice(int verticeId) {
-		this.vertices.putIfAbsent(verticeId, new ArrayList<>());
+		if (!vertices.containsKey(verticeId))
+			this.vertices.put(verticeId, new ArrayList<>()); // Asigno espacio en memoria
 	}
 
 	@Override
 	public void borrarVertice(int verticeId) {
-		this.vertices.remove(verticeId);
+		if (vertices.containsKey(verticeId))
+			this.vertices.remove(verticeId);
+		else
+			System.out.println("No existe el vertice");
 	}
 
 	@Override
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
-		List<Arco<T>> arcos = vertices.getOrDefault(verticeId1, new ArrayList<>());
-		Arco<T> aux = new Arco<>(verticeId1, verticeId2, etiqueta);
-		this.agregarVertice(verticeId2);
+		if (!vertices.containsKey(verticeId1)) {
+			// Si no existe, inicializa una nueva lista para almacenar los arcos
+			vertices.put(verticeId1, new ArrayList<>());
+			// Obtiene la lista de arcos asociada con verticeId1
+			List<Arco<T>> arcos = vertices.get(verticeId1);
+			// Crea el nuevo arco
+			Arco<T> aux = new Arco<>(verticeId1, verticeId2, etiqueta);
+			this.agregarVertice(verticeId2);
 
-		if (!arcos.contains(aux)) {
-			arcos.add(aux);
-			vertices.put(verticeId1, arcos);
+			if (!arcos.contains(aux)) {
+				arcos.add(aux);
+			}
 		}
 	}
 
@@ -46,7 +54,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public boolean contieneVertice(int verticeId) {
-		return (this.vertices.keySet().contains(verticeId)) ? true : false;
+		return (this.vertices.containsKey(verticeId));
 	}
 
 	@Override
@@ -70,7 +78,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public int cantidadVertices() {
-		return this.vertices.keySet().size();
+		return this.vertices.size();
 	}
 
 	@Override
