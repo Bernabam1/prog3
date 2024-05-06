@@ -26,7 +26,7 @@ public class MainArboles {
 	        System.out.println("Frontera = " + bt.getFrontera());
 	        System.out.println("Get Max Element = " + bt.getMaxElement());
 	        System.out.println("Get Element at Level = " + bt.getElementAtLevel(1));
-	        bt.delete(50);
+	        bt.delete(680);
 	        System.out.println("Frontera = " + bt.getFrontera());
 	}
 }

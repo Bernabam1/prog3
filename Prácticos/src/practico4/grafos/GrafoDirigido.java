@@ -31,15 +31,19 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		if (!vertices.containsKey(verticeId1)) {
 			// Si no existe, inicializa una nueva lista para almacenar los arcos
 			vertices.put(verticeId1, new ArrayList<>());
-			// Obtiene la lista de arcos asociada con verticeId1
-			List<Arco<T>> arcos = vertices.get(verticeId1);
-			// Crea el nuevo arco
-			Arco<T> aux = new Arco<>(verticeId1, verticeId2, etiqueta);
+		}
+		if (!vertices.containsKey(verticeId2)) {
+			// Si no existe, agrega el vérticeId2 al grafo
 			this.agregarVertice(verticeId2);
-
-			if (!arcos.contains(aux)) {
-				arcos.add(aux);
-			}
+		}
+		// Obtiene la lista de arcos asociada con verticeId1
+		List<Arco<T>> arcosDeId1 = vertices.get(verticeId1);
+		// Crea el nuevo arco
+		Arco<T> aux = new Arco<>(verticeId1, verticeId2, etiqueta);
+		// Verifica si el arco ya existe en la lista de arcos asociada a verticeId1
+		if (!arcosDeId1.contains(aux)) {
+			// Si no existe, agrega el arco a la lista de arcos asociada a verticeId1
+			arcosDeId1.add(aux);
 		}
 	}
 
