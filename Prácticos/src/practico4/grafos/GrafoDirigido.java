@@ -28,11 +28,18 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	public void borrarVertice(int verticeId) {
 		if (vertices.containsKey(verticeId)) // contieneVertice me pide castear
 			vertices.remove(verticeId);
-		for (Map.Entry<Integer, ArrayList<Arco<T>>> entry : vertices.entrySet()) {
-			for (Arco<T> arco : entry.getValue()) {
+
+		for (ArrayList<Arco<T>> arrArcos : vertices.values()) {
+			for (Arco<T> arco : arrArcos) {
 				borrarArco(arco.getVerticeOrigen(), verticeId);
 			}
 		}
+
+		/*
+		 * for (Map.Entry<Integer, ArrayList<Arco<T>>> entry : vertices.entrySet()) {
+		 * for (Arco<T> arco : entry.getValue()) { borrarArco(arco.getVerticeOrigen(),
+		 * verticeId); } }
+		 */
 	}
 
 	@Override
@@ -88,9 +95,15 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	@Override
 	public int cantidadArcos() {
 		int cant = 0;
-		for (Map.Entry<Integer, ArrayList<Arco<T>>> entry : vertices.entrySet()) {
-			cant += entry.getValue().size();
+		for (ArrayList<Arco<T>> arcos : vertices.values()) {
+			cant += arcos.size();
 		}
+
+		/*
+		 * for (Map.Entry<Integer, ArrayList<Arco<T>>> entry : vertices.entrySet()) {
+		 * cant += entry.getValue().size(); }
+		 */
+
 		return cant;
 	}
 
