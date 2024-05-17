@@ -3,7 +3,7 @@ package practico4.grafos;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class DFS<T> {
+public class DFS<T> {  // Complejidad O (V + A) donde se pasa una vez por cada Vertice y una por cada Arco
 
 	private Grafo<T> grafo;
 	private static final int BLANCO = 0;
