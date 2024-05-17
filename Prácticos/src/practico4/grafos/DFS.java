@@ -17,7 +17,7 @@ public class DFS<T> {
 		this.color = new HashMap<>();
 		this.tiempo = 0;
 	}
-	
+
 	public int getTiempo() {
 		return this.tiempo;
 	}
@@ -44,15 +44,21 @@ public class DFS<T> {
 		color.put(vertice, AMARILLO); // Pinto de amarillo el vertice en el q inicio
 		// Cuando entre al if un vertice de color blanco, se va a pintar de amarillo
 		tiempo++; // Este tendría q asignarse como tiempo de descubrimiento
-		
+
 		Iterator<Integer> adyacentesIterator = grafo.obtenerAdyacentes(vertice);
 		while (adyacentesIterator.hasNext()) {
 			Integer adyacente = adyacentesIterator.next();
 			if (color.get(adyacente) == BLANCO) { // Retorna el valor asociado a la key
 				DFS_visit(adyacente, color); // Llamada recursiva a visitar el adyacente
+			} else {
+				// Determinar si un grafo dirigido tiene algún ciclo.
+				if (color.get(adyacente) == AMARILLO) {
+					System.out.println("Existe un ciclo.");
+				}
 			}
 		}
-		// Si se ejecutó el while completo quiere decir q todos los adyacentes fueron procesados
+		// Si se ejecutó el while completo quiere decir q todos los adyacentes fueron
+		// procesados
 		color.put(vertice, NEGRO);
 		tiempo++; // Este tendría q asignarse como tiempo de finalizacion
 	}
