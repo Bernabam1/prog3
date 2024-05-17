@@ -17,7 +17,7 @@ public class Main {
 		System.out.println(grafito.cantidadVertices());
 
 		// Obtengo el arco entre 1 y 2, y le pido la etiqueta
-		/*Float etiqueta = grafito.obtenerArco(1, 2).getEtiqueta();
+		Float etiqueta = grafito.obtenerArco(1, 2).getEtiqueta();
 
 		System.out.println(etiqueta); // Debería imprimir 3*/
 	}

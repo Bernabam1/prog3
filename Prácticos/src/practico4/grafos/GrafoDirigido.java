@@ -28,18 +28,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	public void borrarVertice(int verticeId) {
 		if (vertices.containsKey(verticeId)) // contieneVertice me pide castear
 			vertices.remove(verticeId);
-
+		// Eliminar el vértice de los conjuntos de adyacentes de los demás vértices
 		for (ArrayList<Arco<T>> arrArcos : vertices.values()) {
 			for (Arco<T> arco : arrArcos) {
 				borrarArco(arco.getVerticeOrigen(), verticeId);
 			}
 		}
-
-		/*
-		 * for (Map.Entry<Integer, ArrayList<Arco<T>>> entry : vertices.entrySet()) {
-		 * for (Arco<T> arco : entry.getValue()) { borrarArco(arco.getVerticeOrigen(),
-		 * verticeId); } }
-		 */
 	}
 
 	@Override
@@ -98,12 +92,6 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		for (ArrayList<Arco<T>> arcos : vertices.values()) {
 			cant += arcos.size();
 		}
-
-		/*
-		 * for (Map.Entry<Integer, ArrayList<Arco<T>>> entry : vertices.entrySet()) {
-		 * cant += entry.getValue().size(); }
-		 */
-
 		return cant;
 	}
 
@@ -114,14 +102,23 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!vertices.containsKey(verticeId)) {
+			return null; // Vértice no está en el grafo
+		}
+		ArrayList<Integer> adyacentes = new ArrayList<>();
+		for (Arco<T> arco : vertices.get(verticeId)) {
+			adyacentes.add(arco.getVerticeDestino());
+		}
+		return adyacentes.iterator();
 	}
 
 	@Override
 	public Iterator<Arco<T>> obtenerArcos() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Arco<T>> listaArcos = new ArrayList<>();
+		for (ArrayList<Arco<T>> listaAdyacencia : vertices.values()) {
+			listaArcos.addAll(listaAdyacencia);
+		}
+		return listaArcos.iterator();
 	}
 
 	@Override
